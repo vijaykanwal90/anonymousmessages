@@ -16,7 +16,11 @@ const url = request.nextUrl
     )){
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
+    if(!token && url.pathname.startsWith('/dashboard')){
+        return NextResponse.redirect(new URL('/sign-in',request.url));
+    }
 //   return NextResponse.redirect(new URL('/home', request.url))
+return NextResponse.next()
 }
  
 export const config = {
