@@ -60,6 +60,9 @@ return token
 async session({session, token}){
     if(token){
         session.user._id=token._id
+        session.user.isVerified=token.isVerified
+        session.user.isAcceptingMessages=token.isAcceptingMessages
+        session.user.username=token.username
     }
 return session 
 },
