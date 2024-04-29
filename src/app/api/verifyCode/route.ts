@@ -1,5 +1,6 @@
-import dbConnect from "@lib/dbConnect"
-import UserModel from  "@/model/User.model"
+import { dbConnect } from "@/app/lib/dbConnect";
+import UserModel
+ from "@/app/models/User.model";
 
 export async function POST(request: Request){
 await  dbConnect()
