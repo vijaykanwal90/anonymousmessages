@@ -20,7 +20,7 @@ try {
         
     
    }
-   const isCodeValid = user.code === code
+   const isCodeValid = user.verifyCode === code
    const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date()
    if(isCodeValid && isCodeNotExpired){
 user.isVerified = true
