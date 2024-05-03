@@ -1,6 +1,6 @@
 import { dbConnect }from "@/lib/dbConnect";
 import UserModel
- from "@/app/models/User.model";
+ from "@/models/User.model";
  import {z} from "zod";
  import { usernameValidation } from "@/schemas/signUpschema";
 
