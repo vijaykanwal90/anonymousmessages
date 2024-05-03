@@ -74,7 +74,9 @@ const page = () => {
         title: 'success',
         description: response.data.message
       })
+
       router.replace(`/verify/${username}`)
+      // console.log("directed to verify page")
       setIsSubmitting(false)
     } catch (error) {
       console.error("Error in signup of user", error)

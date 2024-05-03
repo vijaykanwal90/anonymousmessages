@@ -1,12 +1,18 @@
+"use client"
 import React from 'react'
 import { useParams,  useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
-import {useForm} from 'react-hook-form'
+
 import * as z from 'zod';
 import { verifySchema } from '@/schemas/verifySchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios, { AxiosError } from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
+import { useForm } from 'react-hook-form';
+
 const VerifyAccount = () => {
     const router = useRouter()
     const params = useParams<{username:string }>()
@@ -50,7 +56,29 @@ try {
                 </h1>
                 <p className='mb-4'>Enter the verification code sent to your email</p>
             </div>
-            
+            <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="code"
+          render={({ field }) => {
+              return (
+                  <FormItem>
+                      <FormLabel>Verification Code</FormLabel>
+                      <FormControl>
+                          <Input placeholder="shadcn" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                          Enter the verification code sent to your email
+                      </FormDescription>
+                      <FormMessage />
+                  </FormItem>
+              );
+          }}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
         </div>
       
     </div>
