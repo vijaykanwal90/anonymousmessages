@@ -39,14 +39,14 @@ const page = () => {
       }
     }
   )
-  
+  // console.log(form)
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
    const result =  await signIn('credentials',{
     redirect:false,
     indentifier:data.identifier,
     password:data.password,
   })
-console.log(result)
+console.log(data)
   if(result?.error){
 
     if(result.error==='CredentialsSignin'){
@@ -65,7 +65,7 @@ console.log(result)
   }
   }
   if(result?.url){
-    router.replace('/dashboard')
+    router.replace('/api/dashboard')
   }
   }
 
@@ -92,6 +92,7 @@ console.log(result)
                   <Input
                     {...field}
                     placeholder="email or username"
+                    name="identifier"
                     
                   />
                   </FormControl>

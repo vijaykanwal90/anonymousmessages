@@ -50,7 +50,7 @@ return Response.json(
     return Response.json(
         {
             success:false,
-            messge:"errro checking username"
+            messge:"error checking username"
          } , {status:500})
 
 }
