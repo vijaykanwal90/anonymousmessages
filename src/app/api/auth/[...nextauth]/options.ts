@@ -1,7 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import { dbConnect } from '@/lib/dbConnect';
+import {dbConnect} from '@/lib/dbConnect';
 import UserModel from '@/models/User.model';
 
 export const authOptions: NextAuthOptions = {
@@ -22,8 +22,10 @@ export const authOptions: NextAuthOptions = {
               { username: credentials.identifier },
             ],
           });
+          console.log(user);
           if (!user) {
             throw new Error('No user found with this email');
+            return null;
           }
           if (!user.isVerified) {
             throw new Error('Please verify your account before logging in');
@@ -43,6 +45,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+ 
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -50,6 +53,7 @@ export const authOptions: NextAuthOptions = {
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
         token.username = user.username;
+        // token.exp = Math.floor(Date.now() / 1000) +  60 * 1; // 24 hours
       }
       return token;
     },
@@ -59,12 +63,15 @@ export const authOptions: NextAuthOptions = {
         session.user.isVerified = token.isVerified;
         session.user.isAcceptingMessages = token.isAcceptingMessages;
         session.user.username = token.username;
+        // session.expires = token.exp.toString();
       }
       return session;
     },
   },
-  session: {
-    strategy: 'jwt',
+  session:{
+    strategy:'jwt',
+    // maxAge: 60 * 1,
+    // for session management duration
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
