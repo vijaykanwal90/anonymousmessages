@@ -213,6 +213,7 @@ import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AcceptMessageSchema } from '@/schemas/acceptMessageSchema';
+import MessageCard from '@/components/MessageCard';
 
 function UserDashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -266,6 +267,7 @@ function UserDashboard() {
             description: 'Showing latest messages',
           });
         }
+        console.log(response)
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
         toast({
@@ -322,7 +324,8 @@ function UserDashboard() {
 
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const profileUrl = `${baseUrl}/u/${username}`;
-
+// console.log(baseUrl)
+// console.log(profileUrl)
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
     toast({

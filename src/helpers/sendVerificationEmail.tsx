@@ -18,7 +18,7 @@ export async function sendVerificationEmail(
             react:VerificationEmail({username, otp:verifyCode}),
 
         })
-        console.log(verifyCode)
+        // console.log(verifyCode)
         return {
             success:true,
             message:'verification email sent'

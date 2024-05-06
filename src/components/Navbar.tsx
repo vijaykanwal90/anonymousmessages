@@ -8,10 +8,10 @@ import { Button } from '@react-email/components'
 const Navbar = () => {
 
     const {data:session} = useSession()
-    console.log(session)
+    // console.log(session)
 
     const user :User  = session?.user as User
-    console.log(user)
+    // console.log(user)
 
   return (
     <nav  className='p-4 md:p-6 shadow-md'>
@@ -23,7 +23,7 @@ const Navbar = () => {
                 <>
 
                 <span className='mr-4'> Welcome , {user?.username || user?.email}  </span>
-<Button  className='w-full md:w-auto ' onClick={()=> signOut}>Logout</Button></>
+<Button  className='w-full md:w-auto ' onClick={()=> signOut()}>Logout</Button></>
             ) :(
                 <Link href="/sign-in">
                     <button   className='w-full md:w-auto '>Login</button>

@@ -17,7 +17,7 @@ export async function GET(request:Request){
        },{status:401})
    
     }
-   
+   console.log(session)
     const userId = new mongoose.Types.ObjectId(user._id);
     try {
         const user = await UserModel.aggregate([
@@ -28,7 +28,7 @@ export async function GET(request:Request){
 
         ])
 // console.log(user)
-        if(!user || user.length==0){
+        if(!user){
             return Response.json({
                 success:false,
                 message:"user not found"
@@ -40,7 +40,7 @@ export async function GET(request:Request){
             messages:user[0].messages
         },{status:200})
     } catch (error) {
-        console.error()
+        console.error('Unable to load any messages')
         return Response.json({
             success:false,
             message:"failed to get messages"
