@@ -8,9 +8,10 @@ import { Button } from '@react-email/components'
 const Navbar = () => {
 
     const {data:session} = useSession()
-    // console.log(session)
+    console.log(session)
 
     const user :User  = session?.user as User
+    console.log(user)
 
   return (
     <nav  className='p-4 md:p-6 shadow-md'>
