@@ -22,7 +22,8 @@ export const authOptions: NextAuthOptions = {
               { username: credentials.identifier },
             ],
           });
-          console.log(user);
+          // console.log("this is user in options")
+          // console.log(user);
           if (!user) {
             throw new Error('No user found with this email');
             return null;
