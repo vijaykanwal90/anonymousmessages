@@ -24,6 +24,7 @@ import { ApiResponse } from '@/types/ApiResponse';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { messageSchema } from '@/schemas/messageSchema';
+import { useToast } from '@/components/ui/use-toast';
 
 const specialChar = '||';
 
@@ -38,21 +39,12 @@ export default function SendMessage() {
   const params = useParams<{ username: string }>();
   const username = params.username;
 
-  // const {
-  //   complete,
-  //   completion,
-  //   isLoading: isSuggestLoading,
-  //   error,
-  // } = useCompletion({
-  //   api: '/api/suggest-message',
-  //   initialCompletion: initialMessageString,
-  // });
-
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
   });
 
   const messageContent = form.watch('content');
+  const { toast } = useToast();
 
 
 
@@ -83,16 +75,20 @@ export default function SendMessage() {
       setIsLoading(false);
     }
   };
-
-  const fetchSuggestedMessages = async () => {
+  const suggestMessages = async ()=>{
+    
     try {
-      const response = await axios.get<ApiResponse>('api/suggest-message');
-
+      
     } catch (error) {
-      console.error('Error fetching messages:', error);
-      // Handle error appropriately
+      // useToast({
+      //   title:"Error",
+      //   description:"Failed to suggest messages",
+      //   variant:"destructive"
+      
+      // })
     }
-  };
+  }
+ 
 
   return (
     <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
@@ -132,7 +128,7 @@ export default function SendMessage() {
           </div>
         </form>
       </Form>
-
+      
 
       <Separator className="my-6" />
       <div className="text-center">
