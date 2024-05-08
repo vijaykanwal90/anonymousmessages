@@ -47,7 +47,7 @@ const page = () => {
         setUsernameMessage('')
         try {
           const response = await axios.get(`/api/check-username-unique?username=${username}`)
-          console.log(response)
+          // console.log(response)
           let message = response.data.message
         //   setUsernameMessage(response.data.message)
             setUsernameMessage(message)
@@ -76,7 +76,7 @@ const page = () => {
       })
 
       router.replace(`/verify/${username}`)
-      console.log("directed to verify page")
+      // console.log("directed to verify page")
       setIsSubmitting(false)
     } catch (error) {
       console.error("Error in signup of user", error)

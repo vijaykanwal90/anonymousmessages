@@ -267,7 +267,7 @@ function UserDashboard() {
             description: 'Showing latest messages',
           });
         }
-        console.log(response)
+        // console.log(response)
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
         toast({
