@@ -51,7 +51,13 @@ export default function SendMessage() {
         ...data,
         username,
       });
-
+     if(!response.data.isAcceptingMessages){
+        toast({
+          title: 'Error',
+          description: 'User is not accepting messages',
+          variant: 'destructive',
+        });
+     }
       toast({
         title: response.data.message,
         variant: 'default',

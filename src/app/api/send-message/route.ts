@@ -26,7 +26,7 @@ export async function POST(request:Request){
         return Response.json({
             success:false,
             message:"user is not accepting messages"
-        },{status:403})
+        },{status:404})
     }
     const newMessage = {content, createdAt:new Date()}
 
