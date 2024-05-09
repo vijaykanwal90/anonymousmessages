@@ -30,6 +30,8 @@ import { useToast } from '@/components/ui/use-toast';
 export default function SendMessage() {
   const params = useParams<{ username: string }>();
   const username = params.username;
+  const [separatedData, setSeparatedData] = useState<string[]>([]);
+
 
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
@@ -77,6 +79,7 @@ export default function SendMessage() {
     // console.log(response.data.data)
     const data = response.data.data;
     const separatedData = data.split("||");
+    setSeparatedData(separatedData);
     console.log(typeof separatedData)
     console.log(separatedData)
     } catch (error) {
@@ -131,9 +134,46 @@ export default function SendMessage() {
           </div>
         </form>
       </Form>
-      <div>
-        <button onClick={fetchSuggestedMessages}>Suggest Messages</button>
+      <div className="space-y-4 my-8">
+        <div className="space-y-2">
+          <Button
+            onClick={fetchSuggestedMessages}
+            className="my-4"
+            // disabled={isSuggestLoading}
+          >
+            Suggest Messages
+          </Button>
+          <p>Click on any message below to select it.</p>
+        </div>
+        {/* <Card>
+          <CardHeader>
+            <h3 className="text-xl font-semibold">Messages</h3>
+          </CardHeader>
+          <CardContent className="flex flex-col space-y-4">
+            {error ? (
+              <p className="text-red-500">{error.message}</p>
+            ) : (
+              .map((message, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="mb-2"
+                  onClick={() => handleMessageClick(message)}
+                >
+                  {message}
+                </Button>
+              ))
+            )}
+          </CardContent>
+        </Card> */}
       
+        {separatedData.length > 0 && ( // Only render if there are suggestions
+          <ul>
+            {separatedData.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <Separator className="my-6" />
@@ -146,3 +186,5 @@ export default function SendMessage() {
     </div>
   );
 }
+
+
