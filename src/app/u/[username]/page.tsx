@@ -80,8 +80,7 @@ export default function SendMessage() {
     const data = response.data.data;
     const separatedData = data.split("||");
     setSeparatedData(separatedData);
-    console.log(typeof separatedData)
-    console.log(separatedData)
+    
     } catch (error) {
       console.log("error while fetching suggested messages")
       const axiosError = error as AxiosError<ApiResponse>;
@@ -95,6 +94,10 @@ export default function SendMessage() {
     }
   }
  
+
+  const handleMessageClick = (message: string) => {
+    form.setValue('content', message);
+  };
 
   return (
     <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
@@ -170,7 +173,15 @@ export default function SendMessage() {
         {separatedData.length > 0 && ( // Only render if there are suggestions
           <ul>
             {separatedData.map((message, index) => (
-              <li key={index}>{message}</li>
+                 <Button
+                 key={index}
+                 variant="outline"
+                 className="mb-2"
+                 onClick={() => handleMessageClick(message)}
+               >
+                 {message}
+               </Button>
+              // <li key={index}>{message}</li>
             ))}
           </ul>
         )}
