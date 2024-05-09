@@ -26,14 +26,6 @@ import { useParams } from 'next/navigation';
 import { messageSchema } from '@/schemas/messageSchema';
 import { useToast } from '@/components/ui/use-toast';
 
-const specialChar = '||';
-
-const parseStringMessages = (messageString: string): string[] => {
-  return messageString.split(specialChar);
-};
-
-const initialMessageString =
-  "What's your favorite movie?||Do you have any pets?||What's your dream job?";
 
 export default function SendMessage() {
   const params = useParams<{ username: string }>();
@@ -75,17 +67,28 @@ export default function SendMessage() {
       setIsLoading(false);
     }
   };
-  const suggestMessages = async ()=>{
-    
+  
+  const fetchSuggestedMessages = async () => {
     try {
-      
+      const response = await axios.post<ApiResponse>('/api/suggest-message'
+      )
+      console.log(response)
+
+    // console.log(response.data.data)
+    const data = response.data.data;
+    const separatedData = data.split("||");
+    console.log(typeof separatedData)
+    console.log(separatedData)
     } catch (error) {
-      // useToast({
-      //   title:"Error",
-      //   description:"Failed to suggest messages",
-      //   variant:"destructive"
-      
-      // })
+      console.log("error while fetching suggested messages")
+      const axiosError = error as AxiosError<ApiResponse>;
+      console.log(axiosError) 
+      toast({
+        title: 'Error',
+        description:
+        axiosError.response?.data.message ?? 'Failed to suggest message',
+        variant: 'destructive',
+      });
     }
   }
  
@@ -128,7 +131,10 @@ export default function SendMessage() {
           </div>
         </form>
       </Form>
+      <div>
+        <button onClick={fetchSuggestedMessages}>Suggest Messages</button>
       
+      </div>
 
       <Separator className="my-6" />
       <div className="text-center">
