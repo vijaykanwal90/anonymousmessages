@@ -20,7 +20,8 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 
 import * as z from 'zod';
-import { ApiResponse } from '@/types/ApiResponse';
+import { ApiResponse ,ApiResponseSuggestion} from '@/types/ApiResponse';
+
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { messageSchema } from '@/schemas/messageSchema';
@@ -81,7 +82,7 @@ export default function SendMessage() {
   const fetchSuggestedMessages = async () => {
     try {
       
-      const response = await axios.post<ApiResponse>('/api/suggest-message')
+      const response = await axios.post<ApiResponseSuggestion>('/api/suggest-message')
       console.log(response)
       const aiGeneratedText = response.data.data;
     

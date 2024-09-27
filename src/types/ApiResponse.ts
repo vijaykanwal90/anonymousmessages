@@ -1,6 +1,5 @@
 import { Message } from "@/models/User.model";
 export interface ApiResponse {
-  [x: string]: any;
  
   
   success: boolean;
@@ -9,3 +8,7 @@ export interface ApiResponse {
   messages?:Array<Message>;
 
 }
+export interface ApiResponseSuggestion extends ApiResponse{
+  data : string
+}
+// type ApiResponse = ApiResponse | ApiResponseSuggestion;
