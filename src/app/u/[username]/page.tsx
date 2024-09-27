@@ -58,6 +58,8 @@ export default function SendMessage() {
           variant: 'destructive',
         });
      }
+     
+
       toast({
         title: response.data.message,
         variant: 'default',
@@ -80,9 +82,19 @@ export default function SendMessage() {
     try {
       
       const response = await axios.post<ApiResponse>('/api/suggest-message')
-   
-   const separatedData = response.data.data.split("||");
-    setSeparatedData(separatedData);
+      console.log(response)
+      const aiGeneratedText = response.data.data;
+    
+      // Check if aiGeneratedText is indeed a string before splitting
+      if (typeof aiGeneratedText === 'string') {
+        const separatedData = aiGeneratedText.split("||");
+        console.log('Separated Data:', separatedData);  // Debugging log to see the result
+        
+        // Update state with the array of suggestions
+        setSeparatedData(separatedData);
+      } else {
+        console.log('Expected a string but got:', typeof aiGeneratedText);
+      }
    
     
     } catch (error) {
