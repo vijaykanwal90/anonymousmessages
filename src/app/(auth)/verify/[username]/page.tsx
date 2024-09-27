@@ -67,7 +67,7 @@ try {
                   <FormItem>
                       <FormLabel>Verification Code</FormLabel>
                       <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input placeholder="Enter the code" {...field} />
                       </FormControl>
                       <FormDescription>
                           Enter the verification code sent to your email

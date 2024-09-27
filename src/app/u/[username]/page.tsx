@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { CardHeader, CardContent, Card } from '@/components/ui/card';
+
 
 import {
   Form,
@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { toast } from '@/components/ui/use-toast';
+
 import * as z from 'zod';
 import { ApiResponse } from '@/types/ApiResponse';
 import Link from 'next/link';
@@ -78,14 +78,20 @@ export default function SendMessage() {
   
   const fetchSuggestedMessages = async () => {
     try {
-      const response = await axios.post<ApiResponse>('/api/suggest-message'
-      )
-      console.log(response)
+      
+      const response = await axios.post<ApiResponse>('/api/suggest-message')
+   
+    const stat = response.status
 
-    // console.log(response.data.data)
-    const data = response.data.data;
-    const separatedData = data.split("||");
+
+
+
+    const separatedData = response.data.data.split("||");
+    
+
+   
     setSeparatedData(separatedData);
+   
     
     } catch (error) {
       console.log("error while fetching suggested messages")
@@ -154,27 +160,7 @@ export default function SendMessage() {
           </Button>
           <p>Click on any message below to select it.</p>
         </div>
-        {/* <Card>
-          <CardHeader>
-            <h3 className="text-xl font-semibold">Messages</h3>
-          </CardHeader>
-          <CardContent className="flex flex-col space-y-4">
-            {error ? (
-              <p className="text-red-500">{error.message}</p>
-            ) : (
-              .map((message, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="mb-2"
-                  onClick={() => handleMessageClick(message)}
-                >
-                  {message}
-                </Button>
-              ))
-            )}
-          </CardContent>
-        </Card> */}
+        
       
         {separatedData.length > 0 && ( // Only render if there are suggestions
           <ul>
@@ -203,5 +189,28 @@ export default function SendMessage() {
     </div>
   );
 }
+
+
+{/* <Card>
+          <CardHeader>
+            <h3 className="text-xl font-semibold">Messages</h3>
+          </CardHeader>
+          <CardContent className="flex flex-col space-y-4">
+            {error ? (
+              <p className="text-red-500">{error.message}</p>
+            ) : (
+              .map((message, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="mb-2"
+                  onClick={() => handleMessageClick(message)}
+                >
+                  {message}
+                </Button>
+              ))
+            )}
+          </CardContent>
+        </Card> */}
 
 

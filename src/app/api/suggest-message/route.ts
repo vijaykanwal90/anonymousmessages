@@ -14,8 +14,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro"});
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
-        // console.log(text);
-        // console.log(response.text)
+    
         if(!response){
             return Response.json({
                 status:"error",
@@ -49,3 +48,34 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro"});
     
 }
 }
+
+
+
+
+// import {  GoogleGenerativeAIProvider } from '@ai-sdk/google';
+// import  { createGoogleGenerativeAI } from '@ai-sdk/google';
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+// import {LangugaeModelV1} from '@ai-sdk/google';
+// // import { any } from 'zod';
+// const apiKey = process.env.GOOGLEAI_API_KEY;
+// export async function POST(req: Request){
+//     try{
+//       if(!apiKey){
+//         throw new Error('api key is missing')
+//       }
+
+//       const genAI: GoogleGenerativeAIProvider = createGoogleGenerativeAI({
+//         apiKey,
+//       });
+//        const model:LangugaeModelV1 = genAI.languageModel('gemini-pro');
+
+// const prompt = "Write a story about a magic backpack.";
+
+// const result = await model.generateContent({prompt:String});
+// console.log(result.response.text());
+
+
+//     }
+//     catch(error){
+//     }
+// }
