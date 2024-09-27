@@ -81,15 +81,7 @@ export default function SendMessage() {
       
       const response = await axios.post<ApiResponse>('/api/suggest-message')
    
-    const stat = response.status
-
-
-
-
-    const separatedData = response.data.data.split("||");
-    
-
-   
+   const separatedData = response.data.data.split("||");
     setSeparatedData(separatedData);
    
     
