@@ -99,9 +99,9 @@ export default function SendMessage() {
    
     
     } catch (error) {
-      console.log("error while fetching suggested messages")
+      
       const axiosError = error as AxiosError<ApiResponse>;
-      console.log(axiosError) 
+      
       toast({
         title: 'Error',
         description:

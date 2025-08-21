@@ -239,6 +239,7 @@ function UserDashboard() {
     setIsSwitchLoading(true);
     try {
       const response = await axios.get<ApiResponse>('/api/accept-messages');
+    
       setValue('acceptMessages', response.data.isAcceptingMessages);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
@@ -260,6 +261,7 @@ function UserDashboard() {
       setIsSwitchLoading(false);
       try {
         const response = await axios.get<ApiResponse>('/api/get-messages');
+        
         setMessages(response.data.messages || []);
         if (refresh) {
           toast({
@@ -267,7 +269,7 @@ function UserDashboard() {
             description: 'Showing latest messages',
           });
         }
-        // console.log(response)
+       
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
         toast({
@@ -324,8 +326,7 @@ function UserDashboard() {
 
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const profileUrl = `${baseUrl}/u/${username}`;
-// console.log(baseUrl)
-// console.log(profileUrl)
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
     toast({

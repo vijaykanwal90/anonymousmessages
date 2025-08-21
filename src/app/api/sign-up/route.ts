@@ -10,8 +10,8 @@ export async function POST(request:Request){
      const {username , email , password} =    await request.json();
         
    const existingUserVerifiedByUsername= await  UserModel.findOne({
-        username,
-        isVerified:true
+        username
+        
      })
        if(existingUserVerifiedByUsername){
         return Response.json({
@@ -22,24 +22,13 @@ export async function POST(request:Request){
       const existingUserByEmail = await UserModel.findOne({
         email
        })
-       const verifyCode = Math.floor(10000 + Math.random()*9000).toString()
+       
        if(existingUserByEmail){
-        if(existingUserByEmail.isVerified){
-           return  Response.json({
-                success:false,
-                message:"user already exist with this username"
-            },{status:400}
-              
-            )
-        }
-        else {
-            const hashedPassword = await bcrypt.hash(password,10)
-            existingUserByEmail.password = hashedPassword
-            existingUserByEmail
-            .verifyCode = verifyCode;
-            existingUserByEmail.verifyCodeExpiry = new Date(Date.now()+ 360000)
-            await existingUserByEmail.save();
-        }
+       return Response.json({
+            success:false,
+            message:"User already registerd with the email"
+        },{status:400})
+        
        }
        else {
      const hashedPassword =    await bcrypt.hash(password,10)
@@ -49,29 +38,30 @@ export async function POST(request:Request){
         username,
         email,
         password:hashedPassword,
-        verifyCode,
-        verifyCodeExpiry:expiryDate,
-        isVerified:false,
+        // verifyCode,
+        // verifyCodeExpiry:expiryDate,
+        
         isAcceptingMessages:true,
         messages:[]
      })
      await newUser.save();
        }
     //    send verification email
-  const emailResponse =   await sendVerificationEmail(email,username,verifyCode)
+   
+//   const emailResponse =   await sendVerificationEmail(email,username,verifyCode)
 
-  if(!emailResponse.success){
-return Response.json({
-    success:false,
-    message:email.Response.message
-},{status:500}
+//   if(!emailResponse.success){
+// return Response.json({
+//     success:false,
+//     message:email.Response.message
+// },{status:500}
   
-)
+// )
 
-  }
+//   }
   return Response.json({
       success:true,
-      message:"user registered successfully please verify your email"    
+      message:"user registered successfully "    
     },{status:201})
     } catch (error) {
         console.error("error in registering user",error)

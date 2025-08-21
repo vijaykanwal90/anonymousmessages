@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 export async function GET(request:Request){
     await dbConnect()
     const session = await getServerSession(authOptions)
-    // console.log(session)
+    
     const user:User =  session?.user 
     if(!session || !session.user){
        return Response.json({
@@ -18,9 +18,9 @@ export async function GET(request:Request){
        },{status:401})
    
     }
-//    console.log(session)
+
     const userId = new mongoose.Types.ObjectId(user._id);
-    // console.log("the user id is " ,userId)
+ 
     
     try {
         const user = await UserModel.aggregate([
@@ -30,15 +30,16 @@ export async function GET(request:Request){
             {$group:{_id:'$_id',messages:{$push:'$messages'}}}
 
         ])
-        // console.log("the user after aggregation " ,user)
+        
+     
         if(!user || user.length === 0){
             return Response.json({
                 success:false,
-                message:"user not found"
-            },{status:401})
+                message:"messages not found"
+            },{status:200})
     
         }
-        // console.log(user)
+        console.log("user is there")
        
         return Response.json({
             success:true,

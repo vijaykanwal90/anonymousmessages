@@ -8,7 +8,7 @@ import Navbar from '@/components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'True Feedback',
+  title: 'FeedbackLoop',
   description: 'Real feedback from real people.',
 };
 

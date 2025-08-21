@@ -38,6 +38,7 @@ export default function SignInForm() {
     });
 
     if (result?.error) {
+     
       if (result.error === 'CredentialsSignin') {
         toast({
           title: 'Login Failed',
@@ -52,9 +53,10 @@ export default function SignInForm() {
         });
       }
     }
-
+   
+   
     if (result?.url) {
-      // console.log(" i have the user")
+    
       router.replace('/dashboard');
     }
   };

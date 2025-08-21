@@ -17,6 +17,7 @@ import {
   }
   
   export default function VerificationEmail({ username, otp }: VerificationEmailProps) {
+    console.log("hsdfh")
     return (
       <Html lang="en" dir="ltr">
         <Head>

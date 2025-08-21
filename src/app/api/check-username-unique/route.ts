@@ -21,7 +21,7 @@ try {
     }
     // validate with zod
    const result =  UsernameQuerySchema.safeParse(queryParam)
-//    console.log(result)
+
    if(!result.success){
     const usernameErrors = result.error.format()
     .username?._errors || []
@@ -35,7 +35,7 @@ try {
    }
    const {username} = result.data
   const existingVerifiedUser =  await UserModel.findOne({
-    username, isVerified:true
+    username
    })
    if(existingVerifiedUser){
     return Response.json({

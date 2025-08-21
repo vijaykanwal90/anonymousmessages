@@ -12,13 +12,13 @@ export async function sendVerificationEmail(
 
     try {
         await resend.emails.send({
-            from:'onboarding@resend.dev',
+            from:'mextra174@gmai.com',
             to:email,
             subject:'anonymous message || verify your email',
             react:VerificationEmail({username, otp:verifyCode}),
 
         })
-        // console.log(verifyCode)
+        console.log(verifyCode)
         return {
             success:true,
             message:'verification email sent'
@@ -31,3 +31,4 @@ export async function sendVerificationEmail(
         }
     }
 }
+// service_vnko3f1

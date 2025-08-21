@@ -20,38 +20,22 @@ try {
         
     
    }
-   const isCodeValid = user.verifyCode === code
-   const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date()
-   if(isCodeValid && isCodeNotExpired){
-user.isVerified = true
+//    const isCodeValid = user.verifyCode === code
+//    const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date()
+  
+
 await user.save()
 return Response.json(
     {
         success:true,
-        messge:"account verified"
+        messge:"logged in"
      } , {status:200})
-   }
-   else if(!isCodeNotExpired){
-   return  Response.json(
-        {
-            success:false,
-            messge:"verification code expired , please sign again to get a new code"
-         } , {status:500})
-   }
-   else {
-   return  Response.json(
-        {
-            success:false,
-            messge:"incorrect verification code "
-         } , {status:400})
-   }
-} catch (error) {
-    console.error("error verifying user",error)
-    return Response.json(
-        {
-            success:false,
-            messge:"error checking username"
-         } , {status:500})
-
-}
-}
+    }
+    catch(error){
+Response.json(
+    {
+        success:false,
+        messge:"error while logging"
+     } , {status:200})
+    
+    }}

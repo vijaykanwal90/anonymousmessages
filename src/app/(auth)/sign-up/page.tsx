@@ -16,6 +16,8 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { FaRegEyeSlash } from 'react-icons/fa';
+import { IoEyeOutline } from 'react-icons/io5';
 
 const Page = () => {
 
@@ -23,7 +25,7 @@ const Page = () => {
   const [usernameMessage, setUsernameMessage] = useState('')
   const [isCheckingUsername, setIsCheckingUsername] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
+  const [showPassword,setShowPassword] = useState(false)
   // const [debouncedValue, setValue] = useDebounceValue(defaultValue, 500)
   const debounced = useDebounceCallback(setUsername, 500)
   const { toast } = useToast()
@@ -47,7 +49,7 @@ const Page = () => {
         setUsernameMessage('')
         try {
           const response = await axios.get(`/api/check-username-unique?username=${username}`)
-          // console.log(response)
+        
           let message = response.data.message
         //   setUsernameMessage(response.data.message)
             setUsernameMessage(message)
@@ -75,7 +77,6 @@ const Page = () => {
         description: response.data.message
       })
 
-      router.replace(`/verify/${username}`)
      
       setIsSubmitting(false)
     } catch (error) {
@@ -136,7 +137,7 @@ const Page = () => {
               name="email"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
+                <FormItem >
                   <FormLabel>Email</FormLabel>
                   <Input {...field} name="email" />
                   <p className='text-muted text-gray-400 text-sm'>We will send you a verification code</p>
@@ -144,18 +145,29 @@ const Page = () => {
                 </FormItem>
               )}
             />
-
-            <FormField
+   
+            <FormField 
               name="password"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
+                <FormItem >
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" {...field} name="password" />
+                  <div className='flex items-center justify-between'>
+                  <Input type={showPassword ? "text":"password"} {...field} name="password" />
+                  <span>
+                {showPassword ? <IoEyeOutline className=' relative  right-5 cursor-pointer' onClick={() => setShowPassword(!showPassword)} /> : <FaRegEyeSlash className='relative right-5' onClick={() => setShowPassword(!showPassword)} />
+                }
+
+              </span>
+              </div>
+                 
                   <FormMessage />
                 </FormItem>
+                
               )}
             />
+             
+         
             <Button type="submit" className='w-full' disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
