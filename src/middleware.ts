@@ -10,8 +10,8 @@ const url = request.nextUrl
     if(token && (
         url.pathname.startsWith('/sign-in') ||
         url.pathname.startsWith('/sign-up') ||
-        url.pathname.startsWith('/verify') ||
-        url.pathname.startsWith('/') 
+        url.pathname.startsWith('/verify') 
+        
 
     )){
       // console.log(token)
@@ -30,19 +30,7 @@ export const config = {
     '/sign-up',
     '/',
     '/verify/:path*',
-    '/dashboard/:path'
+    '/dashboard/:path*'
 
   ]
 }
-// import { clerkMiddleware } from '@clerk/nextjs/server';
-
-// export default clerkMiddleware();
-
-// export const config = {
-//   matcher: [
-//     // Skip Next.js internals and all static files, unless found in search params
-//     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-//     // Always run for API routes
-//     '/(api|trpc)(.*)',
-//   ],
-// };

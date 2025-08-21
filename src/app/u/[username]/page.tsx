@@ -33,7 +33,7 @@ export default function SendMessage() {
   const username = params.username;
   const [separatedData, setSeparatedData] = useState<string[]>([]);
 
-
+//  const [isLoading, setIsLoading] = useState(false)
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
   });
@@ -81,7 +81,7 @@ export default function SendMessage() {
   
   const fetchSuggestedMessages = async () => {
     try {
-      
+       setIsLoading(true)
       const response = await axios.post<ApiResponseSuggestion>('/api/suggest-message')
       console.log(response)
       const aiGeneratedText = response.data.data;
@@ -93,14 +93,18 @@ export default function SendMessage() {
         
         // Update state with the array of suggestions
         setSeparatedData(separatedData);
+
       } else {
         console.log('Expected a string but got:', typeof aiGeneratedText);
       }
+      setIsLoading(false)
+
    
     
     } catch (error) {
       
       const axiosError = error as AxiosError<ApiResponse>;
+      setIsLoading(false)
       
       toast({
         title: 'Error',
@@ -159,7 +163,7 @@ export default function SendMessage() {
           <Button
             onClick={fetchSuggestedMessages}
             className="my-4"
-            // disabled={isSuggestLoading}
+            disabled={isLoading}
           >
             Suggest Messages
           </Button>
