@@ -6,12 +6,12 @@ import * as z from "zod"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useDebounceCallback } from 'usehooks-ts'
-import { useToast } from '@/components/ui/use-toast'
+// import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import axios, { AxiosError } from 'axios'
 import { signUpSchema } from '@/schemas/signUpschema'
 import { ApiResponse } from '@/types/ApiResponse'
-
+import {toast} from 'sonner'
 import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
@@ -28,7 +28,7 @@ const Page = () => {
   const [showPassword,setShowPassword] = useState(false)
   // const [debouncedValue, setValue] = useDebounceValue(defaultValue, 500)
   const debounced = useDebounceCallback(setUsername, 500)
-  const { toast } = useToast()
+  // const { toast } = useToast()
   const router = useRouter()
 
   // zod validation 
@@ -72,10 +72,11 @@ const Page = () => {
     setIsSubmitting(true)
     try {
       const response = await axios.post<ApiResponse>('/api/sign-up', data)
-      toast({
-        title: 'success',
-        description: response.data.message
-      })
+      // toast({
+      //   title: 'success',
+      //   description: response.data.message
+      // })
+      toast.success(response.data.message)
 
      
       setIsSubmitting(false)
@@ -84,11 +85,12 @@ const Page = () => {
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message
 
-      toast({
-        title: 'Sign-up failed',
-        description: errorMessage,
-        variant: 'destructive'
-      })
+      // toast({
+      //   title: 'Sign-up failed',
+      //   description: errorMessage,
+      //   variant: 'destructive'
+      // })
+      toast.error("Sign-up failed")
       setIsSubmitting(false)
     }
   }

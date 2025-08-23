@@ -6,7 +6,7 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
-import { useToast } from '@/components/ui/use-toast';
+// import { useToast } from '@/components/ui/use-toast';
 import { Message } from '@/models/User.model';
 import { ApiResponse } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,6 +15,7 @@ import { Loader2, RefreshCcw } from 'lucide-react';
 import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
+import {toast} from "sonner"
 import { useForm } from 'react-hook-form';
 import { AcceptMessageSchema } from '@/schemas/acceptMessageSchema';
 import MessageCard from '@/components/MessageCard';
@@ -24,7 +25,7 @@ function UserDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
 
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   const handleDeleteMessage = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId));
@@ -34,6 +35,9 @@ function UserDashboard() {
 
   const form = useForm({
     resolver: zodResolver(AcceptMessageSchema),
+     defaultValues: {
+    acceptMessages: false,   // 👈 make sure this exists
+  },
   });
 
   const { register, watch, setValue } = form;
@@ -43,21 +47,22 @@ function UserDashboard() {
     setIsSwitchLoading(true);
     try {
       const response = await axios.get<ApiResponse>('/api/accept-messages');
-    
-      setValue('acceptMessages', response.data.isAcceptingMessages);
+     console.log(response.data)
+    setValue('acceptMessages',response?.data?.isAcceptingMessages ?? false);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      toast({
-        title: 'Error',
-        description:
-          axiosError.response?.data.message ??
-          'Failed to fetch message settings',
-        variant: 'destructive',
-      });
+      // toast({
+      //   title: 'Error',
+      //   description:
+      //     axiosError.response?.data.message ??
+      //     'Failed to fetch message settings',
+      //   variant: 'destructive',
+      // });
+      toast.error(axiosError.response?.data.message)
     } finally {
       setIsSwitchLoading(false);
     }
-  }, [setValue, toast]);
+  }, [setValue]);
 
   const fetchMessages = useCallback(
     async (refresh: boolean = false) => {
@@ -65,29 +70,31 @@ function UserDashboard() {
       setIsSwitchLoading(false);
       try {
         const response = await axios.get<ApiResponse>('/api/get-messages');
-        
+
         setMessages(response.data.messages || []);
         if (refresh) {
-          toast({
-            title: 'Refreshed Messages',
-            description: 'Showing latest messages',
-          });
+          // toast({
+          //   title: 'Refreshed Messages',
+          //   description: 'Showing latest messages',
+          // });
+          toast.message("Refresshed messages")
         }
-       
+
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
-        toast({
-          title: 'Error',
-          description:
-            axiosError.response?.data.message ?? 'Failed to fetch messages',
-          variant: 'destructive',
-        });
+        // toast({
+        //   title: 'Error',
+        //   description:
+        //     axiosError.response?.data.message ?? 'Failed to fetch messages',
+        //   variant: 'destructive',
+        // });
+        toast.error("failed to load messages")
       } finally {
         setIsLoading(false);
         setIsSwitchLoading(false);
       }
     },
-    [setIsLoading, setMessages, toast]
+    [setIsLoading, setMessages]
   );
 
   // Fetch initial state from the server
@@ -97,7 +104,7 @@ function UserDashboard() {
     fetchMessages();
 
     fetchAcceptMessages();
-  }, [session, setValue, toast, fetchAcceptMessages, fetchMessages]);
+  }, [session, setValue, fetchAcceptMessages, fetchMessages]);
 
   // Handle switch change
   const handleSwitchChange = async () => {
@@ -106,19 +113,21 @@ function UserDashboard() {
         acceptMessages: !acceptMessages,
       });
       setValue('acceptMessages', !acceptMessages);
-      toast({
-        title: response.data.message,
-        variant: 'default',
-      });
+      // toast({
+      //   title: response.data.message,
+      //   variant: 'default',
+      // });
+      toast.message(response.data.message)
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      toast({
-        title: 'Error',
-        description:
-          axiosError.response?.data.message ??
-          'Failed to update message settings',
-        variant: 'destructive',
-      });
+      // toast({
+      //   title: 'Error',
+      //   description:
+      //     axiosError.response?.data.message ??
+      //     'Failed to update message settings',
+      //   variant: 'destructive',
+      // });
+      toast.error(axiosError.response?.data.message)
     }
   };
 
@@ -128,18 +137,19 @@ function UserDashboard() {
 
   const { username } = session.user as User;
 
- const baseUrl = typeof window !== 'undefined' 
-  ? `${window.location.protocol}//${window.location.host}` 
-  : '';
- console.log(baseUrl)
+  const baseUrl = typeof window !== 'undefined'
+    ? `${window.location.protocol}//${window.location.host}`
+    : '';
+  console.log(baseUrl)
   const profileUrl = `${baseUrl}/u/${username}`;
-//  console.log(profileUrl)
+  //  console.log(profileUrl)
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
-    toast({
-      title: 'URL Copied!',
-      description: 'Profile URL has been copied to clipboard.',
-    });
+    // toast({
+    //   title: 'URL Copied!',
+    //   description: 'Profile URL has been copied to clipboard.',
+    // });
+    toast.message("URl copied")
   };
 
   return (

@@ -1,5 +1,4 @@
-import mongoose
-from "mongoose";
+import mongoose     from "mongoose";
 
 
 type ConnectionObject = {
@@ -8,19 +7,19 @@ type ConnectionObject = {
 
 const connection: ConnectionObject = {};
 
-export async function dbConnect (): Promise<void>{
+export async function dbConnect(): Promise<void> {
 
-    if(connection.isConnected){
+    if (connection.isConnected) {
         console.log("already connected to dataabse")
         return;
     }
     try {
-     const db = await mongoose.connect(process.env.MONGODB_URI || '',{})
-    //  console.log(db)
-    connection.isConnected =  db.connections[0].readyState
-    console.log("Db connected successfully")
+        const db = await mongoose.connect(process.env.MONGODB_URI || '', {})
+        //  console.log(db)
+        connection.isConnected = db.connections[0].readyState
+        console.log("Db connected successfully")
     } catch (error) {
-        console.log("database connection faiiled",error)
+        console.log("database connection faiiled", error)
         process.exit(1);
     }
 }

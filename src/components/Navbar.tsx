@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useSession , signOut } from 'next-auth/react'
 import {User} from 'next-auth'
-import { Button } from '@react-email/components'
+
 
 const Navbar = () => {
 
@@ -23,7 +23,7 @@ const Navbar = () => {
                 <>
 
                 <span className='mr-4'> Welcome , {user?.username || user?.email}  </span>
-<Button  className='w-full md:w-auto ' onClick={()=> signOut()}>Logout</Button></>
+<button  className='w-full md:w-auto ' onClick={()=> signOut()}>Logout</button></>
             ) :(
                 <Link href="/sign-in">
                     <button   className='w-full md:w-auto '>Login</button>

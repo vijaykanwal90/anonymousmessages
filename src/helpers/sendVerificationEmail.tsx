@@ -1,34 +1,34 @@
-import { resend } from "@/lib/resend";
-import VerificationEmail from "../../emails/VerificationEmail";
-import { ApiResponse } from "@/types/ApiResponse";
+// import { resend } from "@/lib/resend";
+// import VerificationEmail from "../../emails/VerificationEmail";
+// import { ApiResponse } from "@/types/ApiResponse";
 
-export async function sendVerificationEmail(
-    email: string,
-    username: string,
-    verifyCode: string,
+// export async function sendVerificationEmail(
+//     email: string,
+//     username: string,
+//     verifyCode: string,
 
 
-):Promise<ApiResponse>{
+// ):Promise<ApiResponse>{
 
-    try {
-        await resend.emails.send({
-            from:'mextra174@gmai.com',
-            to:email,
-            subject:'anonymous message || verify your email',
-            react:VerificationEmail({username, otp:verifyCode}),
+//     try {
+//         await resend.emails.send({
+//             from:'mextra174@gmai.com',
+//             to:email,
+//             subject:'anonymous message || verify your email',
+//             react:VerificationEmail({username, otp:verifyCode}),
 
-        })
-        console.log(verifyCode)
-        return {
-            success:true,
-            message:'verification email sent'
-        }
-    } catch (emailError) {
-        console.error("error sending verification email",emailError)
-        return {
-            success:false,
-            message:'failed to send verification email'
-        }
-    }
-}
-// service_vnko3f1
+//         })
+//         console.log(verifyCode)
+//         return {
+//             success:true,
+//             message:'verification email sent'
+//         }
+//     } catch (emailError) {
+//         console.error("error sending verification email",emailError)
+//         return {
+//             success:false,
+//             message:'failed to send verification email'
+//         }
+//     }
+// }
+// // service_vnko3f1
