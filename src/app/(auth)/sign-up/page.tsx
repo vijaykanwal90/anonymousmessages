@@ -6,7 +6,7 @@ import * as z from "zod"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useDebounceCallback } from 'usehooks-ts'
-// import { useToast } from '@/components/ui/use-toast'
+
 import { useRouter } from 'next/navigation'
 import axios, { AxiosError } from 'axios'
 import { signUpSchema } from '@/schemas/signUpschema'
@@ -26,9 +26,9 @@ const Page = () => {
   const [isCheckingUsername, setIsCheckingUsername] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showPassword,setShowPassword] = useState(false)
-  // const [debouncedValue, setValue] = useDebounceValue(defaultValue, 500)
+  
   const debounced = useDebounceCallback(setUsername, 500)
-  // const { toast } = useToast()
+ 
   const router = useRouter()
 
   // zod validation 
@@ -72,10 +72,7 @@ const Page = () => {
     setIsSubmitting(true)
     try {
       const response = await axios.post<ApiResponse>('/api/sign-up', data)
-      // toast({
-      //   title: 'success',
-      //   description: response.data.message
-      // })
+     
       toast.success(response.data.message)
 
      
@@ -85,12 +82,8 @@ const Page = () => {
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message
 
-      // toast({
-      //   title: 'Sign-up failed',
-      //   description: errorMessage,
-      //   variant: 'destructive'
-      // })
-      toast.error("Sign-up failed")
+    
+      toast.error("Sign-up failed", {description:errorMessage || "Sign up failed"})
       setIsSubmitting(false)
     }
   }
@@ -142,7 +135,7 @@ const Page = () => {
                 <FormItem >
                   <FormLabel>Email</FormLabel>
                   <Input {...field} name="email" />
-                  <p className='text-muted text-gray-400 text-sm'>We will send you a verification code</p>
+                  {/* <p className='text-muted text-gray-400 text-sm'>We will send you a verification code</p> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -170,7 +163,7 @@ const Page = () => {
             />
              
          
-            <Button type="submit" className='w-full' disabled={isSubmitting}>
+            <Button type="submit" className='w-full border-2 bg-gray-800 text-white' disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

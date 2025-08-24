@@ -16,8 +16,9 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {toast} from "sonner"
-// import { useToast } from '@/components/ui/use-';
+
 import { signInSchema } from '@/schemas/signInSchema';
+import { describe } from 'node:test';
 
 export default function SignInForm() {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function SignInForm() {
     },
   });
 
-  // const { toast } = useToast();
+  
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     const result = await signIn('credentials', {
       redirect: false,
@@ -41,19 +42,13 @@ export default function SignInForm() {
     if (result?.error) {
      
       if (result.error === 'CredentialsSignin') {
-        // toast({
-        //   title: 'Login Failed',
-        //   description: 'Incorrect username or password',
-        //   variant: 'destructive',
-        // });
-        toast.error("login failed")
+       
+        toast.error("login failed", {
+          description:'Incorrect username or password'
+        })
       } else {
-        // toast({
-        //   title: 'Error',
-        //   description: result.error,
-        //   variant: 'destructive',
-        // });
-        toast.error("Error")
+       
+        toast.error("Error",{description:result.error})
       }
     }
    
@@ -97,7 +92,7 @@ export default function SignInForm() {
                 </FormItem>
               )}
             />
-            <Button className='w-full' type="submit">Sign In</Button>
+            <Button className='w-full border-2 bg-gray-800 text-white' type="submit">Sign In</Button>
           </form>
         </Form>
         <div className="text-center mt-4">
