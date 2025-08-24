@@ -23,10 +23,10 @@ const Navbar = () => {
                 <>
 
                 <span className='mr-4'> Welcome , {user?.username || user?.email}  </span>
-<button  className=' border-2 rounded-md bg-gray-800 text-white px-2 py-1' onClick={()=> signOut()}>Logout</button></>
+<button  className=' border-2 rounded-md bg-gray-800 text-white px-4 py-2' onClick={()=> signOut()}>Logout</button></>
             ) :(
                 <Link href="/sign-in">
-                    <button   className='w-full border md:w-auto '>Login</button>
+                    <button   className='w-full  md:w-auto border-2 rounded-md bg-gray-800 text-white px-4 py-2 '>Login</button>
                 </Link>
             )
         }
