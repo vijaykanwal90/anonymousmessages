@@ -138,9 +138,9 @@ export default function SendMessage() {
                 Please wait
               </Button>
             ) : (
-              <Button type="submit" disabled={isLoading || !messageContent}>
+              <button type="submit" disabled={isLoading || !messageContent} className='border-2 rounded-md bg-gray-800 text-white px-4 py-2'>
                 Send It
-              </Button>
+              </button>
             )}
           </div>
         </form>
@@ -149,7 +149,7 @@ export default function SendMessage() {
         <div className="space-y-2">
           <Button
             onClick={fetchSuggestedMessages}
-            className="my-4"
+            className="my-4 border-2 rounded-md bg-gray-800 text-white px-4 py-2"
             disabled={isLoading}
           >
             Suggest Messages
@@ -164,7 +164,7 @@ export default function SendMessage() {
                  <Button
                  key={index}
                  variant="outline"
-                 className="mb-2"
+                 className="mb-2 transition-transform duration-200 hover:scale-105"
                  onClick={() => handleMessageClick(message)}
                >
                  {message}
@@ -179,7 +179,7 @@ export default function SendMessage() {
       <div className="text-center">
         <div className="mb-4">Get Your Message Board</div>
         <Link href={'/sign-up'}>
-          <Button>Create Your Account</Button>
+          <Button className='border-2 rounded-md bg-gray-800 text-white px-4 py-2'>Create Your Account</Button>
         </Link>
       </div>
     </div>
